@@ -11,8 +11,8 @@ import org.white.springtest.model.request.GrantCouponRequest;
 /**
  * <p></p >
  *
- * @author baixiong
- * @version $Id: ValidateProcessor.java, v 0.1 2018年12月12日 16:23:00 baixiong Exp$
+ * @author white
+ * @version $Id: ValidateProcessor.java, v 0.1 2018年12月12日 16:23:00 white Exp$
  */
 @Service
 public class ValidateProcessor {

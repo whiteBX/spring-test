@@ -3,8 +3,8 @@ package org.white.springtest.model.entity;
 /**
  * <p></p >
  *
- * @author baixiong
- * @version $Id: ValidateResult.java, v 0.1 2018年12月12日 16:06:00 baixiong Exp$
+ * @author white
+ * @version $Id: ValidateResult.java, v 0.1 2018年12月12日 16:06:00 white Exp$
  */
 public class ValidateResult {
     /**

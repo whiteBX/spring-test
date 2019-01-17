@@ -8,8 +8,8 @@ import org.white.springtest.validator.Validator;
 /**
  * <p></p >
  *
- * @author baixiong
- * @version $Id: CouponStatusValidator.java, v 0.1 2018年12月12日 16:57:00 baixiong Exp$
+ * @author white
+ * @version $Id: CouponStatusValidator.java, v 0.1 2018年12月12日 16:57:00 white Exp$
  */
 @Component
 public class CouponStatusValidator implements Validator<UseCouponRequest> {
