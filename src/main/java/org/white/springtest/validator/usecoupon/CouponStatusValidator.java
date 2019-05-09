@@ -17,4 +17,11 @@ public class CouponStatusValidator implements Validator<UseCouponRequest> {
     public ValidateResult validate(UseCouponRequest request) {
         return null;
     }
+
+
+
+    public static void main(String[] args) {
+        Integer a = null;
+        System.out.println(a + "");
+    }
 }
