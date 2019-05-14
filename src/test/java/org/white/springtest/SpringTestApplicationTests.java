@@ -1,21 +1,18 @@
 package org.white.springtest;
 
+import java.util.Set;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.white.springtest.aop.LogAop;
-import org.white.springtest.aop.LogAspect;
 import org.white.springtest.model.request.GrantCouponRequest;
 import org.white.springtest.model.request.UseCouponRequest;
 import org.white.springtest.service.HelloService;
 import org.white.springtest.validator.ValidateProcessor;
 import org.white.springtest.validator.Validator;
-
-import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,13 +20,13 @@ import java.util.Set;
 public class SpringTestApplicationTests {
 
     @Autowired
-    private ValidateProcessor validateProcessor;
+    private ValidateProcessor                  validateProcessor;
     @Autowired
     private Set<Validator<GrantCouponRequest>> validatorList;
     @Autowired
-    private Set<Validator<UseCouponRequest>> useCouponValidatorList;
+    private Set<Validator<UseCouponRequest>>   useCouponValidatorList;
     @Autowired
-    private HelloService helloService;
+    private HelloService                       helloService;
 
     @Test
     public void contextLoads() {
@@ -39,7 +36,7 @@ public class SpringTestApplicationTests {
 
     @Test
     public void test() {
-        helloService.sayHello();
+        helloService.sayHello(1);
     }
 
 }
