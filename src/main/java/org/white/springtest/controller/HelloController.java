@@ -22,4 +22,5 @@ public class HelloController {
     public String testHello(@PathVariable("message") int message) {
         return helloService.sayHello(message);
     }
+
 }
