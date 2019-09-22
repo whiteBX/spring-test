@@ -23,4 +23,9 @@ public class HelloController {
         return helloService.sayHello(message);
     }
 
+    @GetMapping("/testHelloTimeOut/{time}")
+    public String testHelloTimeOut(@PathVariable("time") int time) throws InterruptedException {
+        return helloService.sayHelloTimeOut(time);
+    }
+
 }
