@@ -9,4 +9,6 @@ package org.white.springtest.service;
 public interface HelloService {
 
     String sayHello(int i);
+
+    String testRejection();
 }

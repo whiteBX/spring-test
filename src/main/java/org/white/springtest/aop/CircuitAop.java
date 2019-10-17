@@ -12,6 +12,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface CircuitAop {
-
+    /**
+     * 降级方法
+     */
     String fallbackMethod();
 }

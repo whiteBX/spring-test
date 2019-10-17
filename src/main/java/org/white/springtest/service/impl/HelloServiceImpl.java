@@ -1,11 +1,11 @@
 package org.white.springtest.service.impl;
 
-import org.springframework.stereotype.Service;
-import org.white.springtest.aop.CircuitAop;
-import org.white.springtest.service.HelloService;
-
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import org.springframework.stereotype.Service;
+import org.white.springtest.service.HelloService;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p></p >
@@ -16,22 +16,26 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 @Service
 public class HelloServiceImpl implements HelloService {
 
+    private AtomicInteger successAtomicInteger = new AtomicInteger();
+    private AtomicInteger failAtomicInteger = new AtomicInteger();
+
     @Override
-//    @HystrixCommand(
-//            fallbackMethod = "testHelloFallback",
-//            threadPoolProperties = {
-//                    @HystrixProperty(name = "coreSize", value = "10"),
-//                    @HystrixProperty(name = "maxQueueSize", value = "100"),
-//                    @HystrixProperty(name = "queueSizeRejectionThreshold", value = "20")},
-//            commandProperties = {
-//                    //若干10s一个窗口内失败次数, 则达到触发熔断的最少请求量
-//                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
-//                    //错误比率阀值，如果错误率>=该值，circuit会被打开，并短路所有请求触发fallback。默认50
-//                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80"),
-//                    //断路后尝试执行时间, 默认为5s
-//                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
-//            })
-    @CircuitAop(fallbackMethod = "testHelloFallback")
+    @HystrixCommand(
+            fallbackMethod = "testHelloFallback",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "10"),
+                    @HystrixProperty(name = "maxQueueSize", value = "100"),
+                    @HystrixProperty(name = "queueSizeRejectionThreshold", value = "20")},
+            commandProperties = {
+                    //若干10s一个窗口内失败次数, 则达到触发熔断的最少请求量
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
+                    //错误比率阀值，如果错误率>=该值，circuit会被打开，并短路所有请求触发fallback。默认50
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80"),
+                    //断路后尝试执行时间, 默认为5s
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+                    @HystrixProperty(name = "circuitBreaker.forceClosed", value = "false")
+            })
+//    @CircuitAop(fallbackMethod = "testHelloFallback")
     public String sayHello(int i) {
         if (i == 0) {
             throw new RuntimeException();
@@ -39,7 +43,38 @@ public class HelloServiceImpl implements HelloService {
         return "hello" + i;
     }
 
+    @Override
+    @HystrixCommand(
+            fallbackMethod = "testRejectionFallback",
+            threadPoolKey = "rejectionThread",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "10"),
+                    @HystrixProperty(name = "maxQueueSize", value = "1000"),
+//                    @HystrixProperty(name = "queueSizeRejectionThreshold", value = "100")
+            },
+            commandProperties = {
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80"),
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+//                    @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value = "100")
+            })
+    public String testRejection() {
+        return "success：     " + successAtomicInteger.incrementAndGet();
+    }
+
     public String testHelloFallback(int i) {
         return "testHelloFallback execute";
+    }
+
+    public String testRejectionFallback() {
+        return "fail：     " + failAtomicInteger.incrementAndGet();
+    }
+
+    public AtomicInteger getSuccessAtomicInteger() {
+        return successAtomicInteger;
+    }
+
+    public AtomicInteger getFailAtomicInteger() {
+        return failAtomicInteger;
     }
 }

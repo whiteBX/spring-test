@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HalfOpenCircuitState extends CircuitState {
     @Override
     CircuitStatusEnum getStatus() {
-        return null;
+        return CircuitStatusEnum.HALF_OPEN;
     }
 
     @Override
