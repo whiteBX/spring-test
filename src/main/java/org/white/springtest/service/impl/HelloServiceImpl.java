@@ -23,6 +23,7 @@ public class HelloServiceImpl implements HelloService {
     @HystrixCommand(
             fallbackMethod = "testHelloFallback",
             threadPoolKey = "sayHello",
+            commandKey = "sayHello",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "10"),
                     @HystrixProperty(name = "maxQueueSize", value = "100"),
@@ -33,11 +34,13 @@ public class HelloServiceImpl implements HelloService {
                     //错误比率阀值，如果错误率>=该值，circuit会被打开，并短路所有请求触发fallback。默认50
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80"),
                     //断路后尝试执行时间, 默认为5s
-                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
-            })
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+//                    @HystrixProperty(name = "fallback.enabled", value = "false")
+            }
+            )
 //    @CircuitAop(fallbackMethod = "testHelloFallback")
     public String sayHello(int i) {
-        if (i == 0) {
+        if (i <= 0) {
             throw new RuntimeException();
         }
         return "hello" + i;
@@ -64,7 +67,7 @@ public class HelloServiceImpl implements HelloService {
 
     @Override
     @HystrixCommand(
-            fallbackMethod = "testHelloFallback",
+            fallbackMethod = "testTimeOutFallback",
             threadPoolKey = "sayHelloTimeOut",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "10"),
@@ -85,7 +88,11 @@ public class HelloServiceImpl implements HelloService {
     }
 
     public String testHelloFallback(int i) {
-        return "testHelloFallback execute";
+        return "testHelloFallback executed";
+    }
+
+    public String testTimeOutFallback(long i) {
+        return "testTimeOutFallback execute";
     }
 
     public String testRejectionFallback() {

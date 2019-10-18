@@ -11,8 +11,8 @@ import org.white.springtest.service.HelloService;
 /**
  * <p></p >
  *
- * @author baixiong
- * @version $Id: CircuitTest.java, v 0.1 2019年10月16日 09:20:00 baixiong Exp$
+ * @author white
+ * @version $Id: CircuitTest.java, v 0.1 2019年10月16日 09:20:00 white Exp$
  */
 @SpringBootTest(classes = SpringTestApplication.class)
 @RunWith(SpringRunner.class)
@@ -23,6 +23,15 @@ public class CircuitTest {
 
     @Test
     public void testHello() throws Exception {
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> System.out.println(helloService.sayHello(0))).start();
+        }
+
+        Thread.sleep(10000);
+    }
+
+    @Test
+    public void testRejection() throws Exception {
         for (int i = 0; i < 100; i++) {
             new Thread(() -> System.out.println(helloService.testRejection())).start();
         }
