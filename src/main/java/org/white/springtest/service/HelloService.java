@@ -10,7 +10,7 @@ public interface HelloService {
 
     String sayHello(int i);
 
-    String sayHelloTimeOut(int i) throws InterruptedException;
+    String sayHelloTimeOut(long i) throws InterruptedException;
 
     String testRejection();
 }

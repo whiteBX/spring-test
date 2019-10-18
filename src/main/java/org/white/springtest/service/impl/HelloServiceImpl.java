@@ -59,7 +59,7 @@ public class HelloServiceImpl implements HelloService {
 //                    @HystrixProperty(name = "fallback.isolation.semaphore.maxConcurrentRequests", value = "100")
             })
     public String testRejection() {
-        return "success：     " + successAtomicInteger.incrementAndGet();
+        return "success：    " + successAtomicInteger.incrementAndGet();
     }
 
     @Override
@@ -72,14 +72,14 @@ public class HelloServiceImpl implements HelloService {
                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "20")},
             commandProperties = {
                     //若干10s一个窗口内失败次数, 则达到触发熔断的最少请求量
-                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"),
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
                     //错误比率阀值，如果错误率>=该值，circuit会被打开，并短路所有请求触发fallback。默认50
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80"),
                     //断路后尝试执行时间, 默认为5s
-                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100")
             })
-    public String sayHelloTimeOut(int i) throws InterruptedException {
+    public String sayHelloTimeOut(long i) throws InterruptedException {
         Thread.sleep(i);
         return "ddddd";
     }
