@@ -23,8 +23,23 @@ public class CircuitTest {
 
     @Test
     public void testHello() throws Exception {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 6; i++) {
             new Thread(() -> System.out.println(helloService.sayHello(0))).start();
+        }
+
+        Thread.sleep(10000);
+    }
+
+    @Test
+    public void testTimeOut() throws Exception {
+        for (int i = 0; i < 20; i++) {
+            new Thread(() -> {
+                try {
+                    System.out.println(helloService.sayHelloTimeOut(150));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         }
 
         Thread.sleep(10000);
