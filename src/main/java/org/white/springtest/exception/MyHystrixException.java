@@ -5,8 +5,8 @@ import com.netflix.hystrix.exception.HystrixBadRequestException;
 /**
  * <p></p >
  *
- * @author baixiong
- * @version $Id: MyHystrixException.java, v 0.1 2019年10月21日 14:43:00 baixiong Exp$
+ * @author white
+ * @version $Id: MyHystrixException.java, v 0.1 2019年10月21日 14:43:00 white Exp$
  */
 public class MyHystrixException extends HystrixBadRequestException {
 

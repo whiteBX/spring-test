@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.white.springtest.service.HelloService;
 
+import javax.annotation.Resource;
+
 /**
  * <p></p >
  *
@@ -15,17 +17,17 @@ import org.white.springtest.service.HelloService;
 @RestController
 public class HelloController {
 
-    @Autowired
-    private HelloService helloService;
+    @Resource
+    private HelloService helloSentinelService;
 
-    @GetMapping("/{message}")
+    @GetMapping("/testHello/{message}")
     public String testHello(@PathVariable("message") int message) {
-        return helloService.sayHello(message);
+        return helloSentinelService.sayHello(message);
     }
 
     @GetMapping("/testHelloTimeOut/{time}")
     public String testHelloTimeOut(@PathVariable("time") long time) throws InterruptedException {
-        return helloService.sayHelloTimeOut(time);
+        return helloSentinelService.sayHelloTimeOut(time);
     }
 
 }
