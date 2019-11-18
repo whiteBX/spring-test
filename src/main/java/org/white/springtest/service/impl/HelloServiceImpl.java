@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author white
  * @version $Id: HelloServiceImpl.java, v 0.1 2019年01月17日 14:57:00 white Exp$
  */
-@Service
+@Service("helloService")
 public class HelloServiceImpl implements HelloService {
 
     private AtomicInteger successAtomicInteger = new AtomicInteger();
@@ -46,7 +46,7 @@ public class HelloServiceImpl implements HelloService {
             throw new RuntimeException();
 //            throw new MyHystrixException("execute exception", 1001);
         }
-        return "hello" + i;
+        return "hello：" + Thread.currentThread().getName();
     }
 
     @Override
@@ -87,17 +87,17 @@ public class HelloServiceImpl implements HelloService {
             })
     public String sayHelloTimeOut(long i) throws InterruptedException {
         Thread.sleep(i);
-        return "ddddd";
+        return "ddddd：" + Thread.currentThread().getName();
     }
 
     public String testHelloFallback(int i) {
-        return "testHelloFallback executed";
+        return "testHelloFallback executed：" + Thread.currentThread().getName();
     }
 
     public String testTimeOutFallback(long i) throws InterruptedException {
         long begin = System.currentTimeMillis();
         Thread.sleep(1000);
-        return "testTimeOutFallback execute:" + (System.currentTimeMillis() - begin);
+        return "testTimeOutFallback execute：" + (System.currentTimeMillis() - begin);
     }
 
     public String testRejectionFallback() {

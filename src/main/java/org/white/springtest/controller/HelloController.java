@@ -16,7 +16,8 @@ import javax.annotation.Resource;
 @RestController
 public class HelloController {
 
-    @Resource(name = "helloSentinelService")
+    @Resource(name = "helloService")
+//    @Resource(name = "helloSentinelService")
     private HelloService helloService;
 
     @GetMapping("/testHello/{message}")

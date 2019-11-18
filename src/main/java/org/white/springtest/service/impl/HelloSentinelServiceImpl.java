@@ -25,14 +25,14 @@ public class HelloSentinelServiceImpl implements HelloService {
         if (i == 0) {
             throw new RuntimeException("");
         }
-        return "hello world" + Thread.currentThread().getName();
+        return "hello world：" + Thread.currentThread().getName();
     }
 
     @Override
     @SentinelResource(value = "sayHelloTimeOut")
     public String sayHelloTimeOut(long i) throws InterruptedException {
         Thread.sleep(i);
-        return "hello timeout" + Thread.currentThread().getName();
+        return "hello timeout：" + Thread.currentThread().getName();
     }
 
     @Override
@@ -42,6 +42,6 @@ public class HelloSentinelServiceImpl implements HelloService {
     }
 
     public String sayHelloFallBack(int i) {
-        return "sayHelloFallBack execute";
+        return "sayHelloFallBack execute：" + Thread.currentThread().getName();
     }
 }
